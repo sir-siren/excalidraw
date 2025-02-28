@@ -76,6 +76,7 @@ import {
 } from "@excalidraw/math";
 import { intersectElementWithLineSegment } from "./collision";
 import { distanceToBindableElement } from "./distance";
+import { elementCenterPoint } from "./utils";
 
 export type SuggestedBinding =
   | NonDeleted<ExcalidrawBindableElement>
@@ -1585,10 +1586,7 @@ const determineFocusDistance = (
   // Another point on the line, in absolute coordinates (closer to element)
   b: GlobalPoint,
 ): number => {
-  const center = pointFrom<GlobalPoint>(
-    element.x + element.width / 2,
-    element.y + element.height / 2,
-  );
+  const center = elementCenterPoint(element);
 
   if (pointsEqual(a, b)) {
     return 0;
@@ -1733,10 +1731,7 @@ const determineFocusPoint = (
   focus: number,
   adjacentPoint: GlobalPoint,
 ): GlobalPoint => {
-  const center = pointFrom<GlobalPoint>(
-    element.x + element.width / 2,
-    element.y + element.height / 2,
-  );
+  const center = elementCenterPoint(element);
 
   if (focus === 0) {
     return center;
@@ -2167,10 +2162,7 @@ export const getGlobalFixedPointForBindableElement = (
       element.x + element.width * fixedX,
       element.y + element.height * fixedY,
     ),
-    pointFrom<GlobalPoint>(
-      element.x + element.width / 2,
-      element.y + element.height / 2,
-    ),
+    elementCenterPoint(element),
     element.angle,
   );
 };
